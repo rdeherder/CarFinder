@@ -6,7 +6,7 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CarFinderApi.Library.Api
+namespace CarFinderUI.Library.Api
 {
     public class ApiHelper : IApiHelper
     {
@@ -24,7 +24,7 @@ namespace CarFinderApi.Library.Api
 
         private void InitializeClient()
         {
-            string api = _config.GetValue<string>("ExternalCarsApi");
+            string api = _config.GetValue<string>("Api");
             _apiClient = new();
             _apiClient.BaseAddress = new Uri(api);
             _apiClient.DefaultRequestHeaders.Accept.Clear();

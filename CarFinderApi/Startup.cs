@@ -40,7 +40,7 @@ namespace CarFinderApi
             });
 
             services.AddSingleton<IApiHelper, ApiHelper>();
-            services.AddTransient<IExternalCarsData, ExternalCarsData>();
+            services.AddSingleton<IExternalCarsData, ExternalCarsData>();
 
             services.AddControllers();
             services.AddSwaggerGen(c =>
