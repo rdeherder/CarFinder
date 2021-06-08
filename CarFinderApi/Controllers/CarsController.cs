@@ -34,7 +34,7 @@ namespace CarFinderApi.Controllers
             try
             {
                 var cars = await _externalCarsData.GetCars();
-                var retVal = _mapper.Map<List<CarDTO>>(cars).OrderBy(c => c.Id);
+                var retVal = _mapper.Map<List<CarDTO>>(cars);
 
                 return Ok(retVal);
             }

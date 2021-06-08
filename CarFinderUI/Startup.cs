@@ -1,4 +1,5 @@
 using CarFinderUI.Library.Api;
+using CarFinderUI.Search.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -26,6 +27,7 @@ namespace CarFinderUI
         {
             services.AddSingleton<IApiHelper, ApiHelper>();
             services.AddTransient<ICarsEndpoint, CarsEndpoint>();
+            services.AddTransient<ISearchService, SearchService>();
 
             services.AddControllersWithViews();
         }
