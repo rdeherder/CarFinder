@@ -1,0 +1,43 @@
+﻿@page "/car/{Id:int}"
+@inject ICarService carService
+
+@if (_car != null)
+{
+    <h3>Car details</h3>
+
+    <div class="polaroid">
+        <img src="@_car.Img_Url" />
+        <div class="table">
+            <table class="table">
+                <tbody>
+                    <tr>
+                        <td>ID</td>
+                        <td>@_car.Id</td>
+                    </tr>
+                    <tr>
+                        <td>Make</td>
+                        <td>@_car.Make</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+}
+else
+{
+    <p><em>Loading...</em></p>
+}
+
+@code {
+    private Task _task;
+    private CarModel _car;
+
+    [Parameter]
+    public int Id { get; set; }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        _car = await carService.GetCarByIdAsync(Id);
+    }
+}

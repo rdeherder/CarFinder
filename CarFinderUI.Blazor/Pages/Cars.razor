@@ -1,0 +1,59 @@
+﻿@page "/cars"
+@using Microsoft.Extensions.Primitives
+@inject ICarService carService
+@inject NavigationManager navMan
+
+@if (_task.IsCompleted)
+{
+    <GridComponent T="CarModel" Grid="@_grid" OnRowClickedActions="@_rowClickActions"></GridComponent>
+}
+else
+{
+    <p><em>Loading...</em></p>
+}
+
+@code
+{
+    private CGrid<CarModel> _grid;
+    private Task _task;
+    private List<Action<object>> _rowClickActions;
+
+    protected override async Task OnParametersSetAsync()
+    {
+        _rowClickActions = new List<Action<object>>();
+        _rowClickActions.Add(ShowDetail);
+
+        Action<IGridColumnCollection<CarModel>> columns = c =>
+        {
+            c.Add(o => o.Id);
+            c.Add(o => o.Make);
+            c.Add(o => o.Model);
+            c.Add(o => o.Year);
+            c.Add(o => o.HP);
+            c.Add(o => o.Price);
+        };
+
+        var query = new QueryDictionary<StringValues>();
+        query.Add("grid-page", "2");
+
+        var client = new GridClient<CarModel>(q => carService.GetCarsGridRowsAsync(columns, q), query, false, "carsGrid", columns)
+                                             .Filterable()
+                                             .Searchable()
+                                             .Selectable(enable: true)
+                                             .Sortable()
+                                             .WithMultipleFilters();
+
+        _grid = client.Grid;
+
+        _task = client.UpdateGrid();
+        await _task;
+    }
+
+    private void ShowDetail(object item)
+    {
+        if (item.GetType() == typeof(CarModel))
+        {
+            navMan.NavigateTo($"/car/{((CarModel)item).Id}");
+        }
+    }
+}

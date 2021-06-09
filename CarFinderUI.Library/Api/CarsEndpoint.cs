@@ -20,13 +20,13 @@ namespace CarFinderUI.Library.Api
             _apiHelper = apiHelper;
         }
 
-        public async Task<List<CarModel>> GetCars()
+        public async Task<IEnumerable<CarModel>> GetAllAsync()
         {
             using (HttpResponseMessage response = await _apiHelper.ApiClient.GetAsync("/api/cars"))
             {
                 if (response.IsSuccessStatusCode)
                 {
-                    var result = await response.Content.ReadAsAsync<List<CarModel>>();
+                    var result = await response.Content.ReadAsAsync<IEnumerable<CarModel>>();
                     return result;
                 }
                 else
@@ -34,7 +34,22 @@ namespace CarFinderUI.Library.Api
                     throw new Exception(response.ReasonPhrase);
                 }
             }
+        }
 
+        public async Task<CarModel> GetAsync(int id)
+        {
+            using (HttpResponseMessage response = await _apiHelper.ApiClient.GetAsync($"/api/cars/{id}"))
+            {
+                if (response.IsSuccessStatusCode)
+                {
+                    var result = await response.Content.ReadAsAsync<CarModel>();
+                    return result;
+                }
+                else
+                {
+                    throw new Exception(response.ReasonPhrase);
+                }
+            }
         }
     }
 }

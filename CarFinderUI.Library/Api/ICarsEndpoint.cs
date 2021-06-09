@@ -6,6 +6,7 @@ namespace CarFinderUI.Library.Api
 {
     public interface ICarsEndpoint
     {
-        Task<List<CarModel>> GetCars();
+        Task<CarModel> GetAsync(int id);
+        Task<IEnumerable<CarModel>> GetAllAsync();
     }
 }

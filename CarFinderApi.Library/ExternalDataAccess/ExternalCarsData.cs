@@ -33,7 +33,7 @@ namespace CarFinderApi.Library.ExternalDataAccess
             _timeOutInMinutes = _config.GetValue<int>("ExternalCarsApiRefreshTimeOutInMinutes");
         }
 
-        public async Task<List<ExternalCarModel>> GetCars()
+        public async Task<IEnumerable<ExternalCarModel>> GetCars()
         {
             if (_stopwatch.IsRunning)
             {
@@ -74,7 +74,7 @@ namespace CarFinderApi.Library.ExternalDataAccess
                 return result;
             }
 
-            return _externalCars.Where(c => c.Id == id).FirstOrDefault();
+            return _externalCars.Where(c => c.Id == id).SingleOrDefault();
         }
 
         private async Task<ExternalCarModel> RetrieveFromExternalApi(int id)

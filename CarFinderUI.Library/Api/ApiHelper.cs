@@ -30,6 +30,5 @@ namespace CarFinderUI.Library.Api
             _apiClient.DefaultRequestHeaders.Accept.Clear();
             _apiClient.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
         }
-
     }
 }
