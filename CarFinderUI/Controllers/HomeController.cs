@@ -45,7 +45,7 @@ namespace CarFinderUI.Controllers
                 int pageNumber = (page ?? 1);
                 //return View(students.ToPagedList(pageNumber, pageSize));
 
-                return View(model.ToPagedList());
+                return View(model);
             }
             catch (Exception ex)
             {

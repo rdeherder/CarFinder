@@ -42,7 +42,7 @@ namespace CarFinderApi.Library.ExternalDataAccess
 
             if (_externalCars == null || _stopwatch.Elapsed.TotalMinutes >= _timeOutInMinutes)
             {
-                await RetrieveFromApi();
+                await RetrieveAllFromExternalApi();
 
                 _stopwatch = new Stopwatch();
                 _stopwatch.Start();
@@ -51,7 +51,7 @@ namespace CarFinderApi.Library.ExternalDataAccess
             return _externalCars;
         }
 
-        private async Task RetrieveFromApi()
+        private async Task RetrieveAllFromExternalApi()
         {
             using (HttpResponseMessage response = await _apiHelper.ApiClient.GetAsync("/cars"))
             {
@@ -65,5 +65,33 @@ namespace CarFinderApi.Library.ExternalDataAccess
                 }
             }
         }
+
+        public async Task<ExternalCarModel> GetCar(int id)
+        {
+            if (_externalCars == null)
+            {
+                var result = await RetrieveFromExternalApi(id);
+                return result;
+            }
+
+            return _externalCars.Where(c => c.Id == id).FirstOrDefault();
+        }
+
+        private async Task<ExternalCarModel> RetrieveFromExternalApi(int id)
+        {
+            using (HttpResponseMessage response = await _apiHelper.ApiClient.GetAsync($"/cars/{id}"))
+            {
+                if (response.IsSuccessStatusCode)
+                {
+                    var result = await response.Content.ReadAsAsync<ExternalCarModel>();
+                    return result;
+                }
+                else
+                {
+                    throw new Exception(response.ReasonPhrase);
+                }
+            }
+        }
+
     }
 }

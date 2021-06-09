@@ -44,5 +44,24 @@ namespace CarFinderApi.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
+        [HttpGet("{id:int}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> GetCar(int id)
+        {
+            try
+            {
+                var cars = await _externalCarsData.GetCar(id);
+                var retVal = _mapper.Map<CarDTO>(cars);
+
+                return Ok(retVal);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, $"Exception at {nameof(GetCars)}");
+                return BadRequest(ex.Message);
+            }
+        }
     }
 }

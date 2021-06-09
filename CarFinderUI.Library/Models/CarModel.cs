@@ -13,5 +13,6 @@ namespace CarFinderUI.Library.Models
         public int Year { get; set; }
         public int HP { get; set; }
         public double Price { get; set; }
+        public string Img_Url { get; set; }
     }
 }
