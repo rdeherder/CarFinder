@@ -11,6 +11,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarFinderUI.Library", "CarF
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarFinderUI.Blazor", "CarFinderUI.Blazor\CarFinderUI.Blazor.csproj", "{0D62AF5A-1948-4207-A858-53C33E3C613B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarFinderWebApi", "CarFinderWebApi\CarFinderWebApi.csproj", "{B758A8BB-A8F6-45C1-AC6E-CF5C1F9A8A5E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{0D62AF5A-1948-4207-A858-53C33E3C613B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0D62AF5A-1948-4207-A858-53C33E3C613B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0D62AF5A-1948-4207-A858-53C33E3C613B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B758A8BB-A8F6-45C1-AC6E-CF5C1F9A8A5E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B758A8BB-A8F6-45C1-AC6E-CF5C1F9A8A5E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B758A8BB-A8F6-45C1-AC6E-CF5C1F9A8A5E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B758A8BB-A8F6-45C1-AC6E-CF5C1F9A8A5E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

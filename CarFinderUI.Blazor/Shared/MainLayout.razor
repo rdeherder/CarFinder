@@ -2,6 +2,20 @@
 
 <div class="page">
     <div class="main">
+        <div class="top-row px-4">
+            <AuthorizeView>
+                <Authorized>
+                    @*Welcome (@context.User.FindFirst(ClaimTypes.Name).Value)*@
+                    <NavLink class="nav-link" href="logout">
+                        <span class="oi oi-account-logout"></span> Log Out
+                    </NavLink>
+                </Authorized>
+                <NotAuthorized>
+                    <LogIn></LogIn>
+                </NotAuthorized>
+            </AuthorizeView>
+        </div>
+
         <div class="content px-4">
             @Body
         </div>

@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Blazored.LocalStorage" Version="4.1.1" />
     <PackageReference Include="GridBlazor" Version="2.1.16" />
     <PackageReference Include="GridMvcCore" Version="4.1.8" />
   </ItemGroup>

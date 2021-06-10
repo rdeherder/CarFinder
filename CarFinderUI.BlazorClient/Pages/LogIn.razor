@@ -1,0 +1,62 @@
+﻿@inject IAuthenticationService authService
+@inject NavigationManager navManager
+
+@if (_showAuthenticationError)
+{
+    <div class="alert alert-danger" role="alert">
+        <p>@_authenticationErrorText</p>
+    </div>
+}
+
+<EditForm Model="_model" OnValidSubmit="ExecuteLogin" class="">
+
+    <div class="form-row">
+        <div class="col-auto">
+            <label for="email" class="sr-only">Email:</label>       <!-- sr-only = alleen tonen voor screen readers -->
+            <InputText id="email" class="form-control" @bind-Value="_model.Email" placeholder="Email adres" />
+        </div>
+
+        <div class="col-auto">
+            <label for="password" class="sr-only">Password:</label>
+            <InputText type="password" id="password" class="form-control" @bind-Value="_model.Password" placeholder="Wachtwoord" />
+        </div>
+
+        <div class="col-auto">
+            <button type="submit" class="btn btn-success">Log in</button>
+        </div>
+
+        <div class="col-auto">
+            <button type="button" class="btn btn-primary" @onclick="RegisterUser">Register</button>
+        </div>
+    </div>
+
+</EditForm>
+
+@code {
+    private AuthenticationUserModel _model = new();
+
+    private bool _showAuthenticationError = false;
+    private string _authenticationErrorText = string.Empty;
+
+    private void RegisterUser()
+    {
+        navManager.NavigateTo("/register");
+    }
+
+    private async Task ExecuteLogin()
+    {
+        _showAuthenticationError = false;
+
+        AuthenticatedUserModel result = await authService.Login(_model);
+
+        if (result is not null)
+        {
+            navManager.NavigateTo("/");
+        }
+        else
+        {
+            _authenticationErrorText = "Fout bij het inloggen.";
+            _showAuthenticationError = true;
+        }
+    }
+}

@@ -1,10 +1,12 @@
 using CarFinderApi.Configurations;
+using CarFinderApi.Data;
 using CarFinderApi.Library.Api;
 using CarFinderApi.Library.ExternalDataAccess;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -31,6 +33,13 @@ namespace CarFinderApi
         {
             services.AddAutoMapper(typeof(MapperInitializer));
 
+            services.AddDbContext<DatabaseContext>(options =>
+                options.UseSqlServer(Configuration.GetConnectionString("sqlConnection"))
+            );
+
+            services.AddAuthentication();
+            services.ConfigureIdentity();
+
             services.AddCors(o =>
             {
                 o.AddPolicy("MijnCorsPolicy_AllowAll",
@@ -42,11 +51,12 @@ namespace CarFinderApi
             services.AddSingleton<IApiHelper, ApiHelper>();
             services.AddSingleton<IExternalCarsData, ExternalCarsData>();
 
-            services.AddControllers();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "CarFinderApi", Version = "v1" });
             });
+
+            services.AddControllers();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
