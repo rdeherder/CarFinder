@@ -18,6 +18,22 @@
                         <td>Make</td>
                         <td>@_car.Make</td>
                     </tr>
+                    <tr>
+                        <td>Model</td>
+                        <td>@_car.Model</td>
+                    </tr>
+                    <tr>
+                        <td>Year</td>
+                        <td>@_car.Year</td>
+                    </tr>
+                    <tr>
+                        <td>HP</td>
+                        <td>@_car.HP</td>
+                    </tr>
+                    <tr>
+                        <td>Price</td>
+                        <td>@_car.Price</td>
+                    </tr>
                 </tbody>
             </table>
         </div>
@@ -26,11 +42,10 @@
 }
 else
 {
-    <p><em>Loading...</em></p>
+    <p><em>Loading cars, one moment please...</em></p>
 }
 
 @code {
-    private Task _task;
     private CarModel _car;
 
     [Parameter]

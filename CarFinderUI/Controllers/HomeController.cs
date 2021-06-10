@@ -56,7 +56,7 @@ namespace CarFinderUI.Controllers
 
         private async Task<CarDTO> GetCars(string sortOrder, string currentFilter, string searchString, int? currentPage, int maxRows = 10)
         {
-            var cars = await _carsEndpoint.GetCars();
+            var cars = await _carsEndpoint.GetAllAsync();
             var pageCount = cars.Count / maxRows;
             var retVal = new CarDTO();
             int page = currentPage ?? 1;

@@ -9,7 +9,7 @@
 }
 else
 {
-    <p><em>Loading...</em></p>
+    <p><em>Cars are being loaded, one moment please...</em></p>
 }
 
 @code
@@ -37,6 +37,7 @@ else
         query.Add("grid-page", "2");
 
         var client = new GridClient<CarModel>(q => carService.GetCarsGridRowsAsync(columns, q), query, false, "carsGrid", columns)
+                                             .ChangePageSize(enable: true)
                                              .Filterable()
                                              .Searchable()
                                              .Selectable(enable: true)

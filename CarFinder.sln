@@ -7,8 +7,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarFinderApi", "CarFinderAp
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarFinderApi.Library", "CarFinderApi.Library\CarFinderApi.Library.csproj", "{2195F0CA-F9EF-425B-A058-C3997025D9F2}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarFinderUI", "CarFinderUI\CarFinderUI.csproj", "{EE1FDC4E-CA40-420C-A83C-0F30D00041BE}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarFinderUI.Library", "CarFinderUI.Library\CarFinderUI.Library.csproj", "{17C15710-95BE-40B7-AF71-CDC38E290318}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarFinderUI.Blazor", "CarFinderUI.Blazor\CarFinderUI.Blazor.csproj", "{0D62AF5A-1948-4207-A858-53C33E3C613B}"
@@ -27,10 +25,6 @@ Global
 		{2195F0CA-F9EF-425B-A058-C3997025D9F2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2195F0CA-F9EF-425B-A058-C3997025D9F2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2195F0CA-F9EF-425B-A058-C3997025D9F2}.Release|Any CPU.Build.0 = Release|Any CPU
-		{EE1FDC4E-CA40-420C-A83C-0F30D00041BE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{EE1FDC4E-CA40-420C-A83C-0F30D00041BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{EE1FDC4E-CA40-420C-A83C-0F30D00041BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{EE1FDC4E-CA40-420C-A83C-0F30D00041BE}.Release|Any CPU.Build.0 = Release|Any CPU
 		{17C15710-95BE-40B7-AF71-CDC38E290318}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{17C15710-95BE-40B7-AF71-CDC38E290318}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{17C15710-95BE-40B7-AF71-CDC38E290318}.Release|Any CPU.ActiveCfg = Release|Any CPU

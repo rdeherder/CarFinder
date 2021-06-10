@@ -33,6 +33,7 @@ namespace CarFinderUI.Blazor.Data
                             "carsGrid",
                             columns,
                             10)
+                            .ChangePageSize(enable: true)
                             .Filterable()
                             .Searchable()
                             .Selectable(set: true)
