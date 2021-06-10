@@ -1,4 +1,4 @@
-﻿using CarFinderApi.Models;
+﻿using CarFinderApi.Library.Models;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 

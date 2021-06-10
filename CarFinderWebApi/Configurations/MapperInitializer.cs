@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using CarFinderApi.Models;
+using CarFinderApi.Library.Models;
 using CarFinderWebApi.Models;
 
 namespace CarFinderWebApi.Configurations

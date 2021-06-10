@@ -1,9 +1,17 @@
 ﻿using AutoMapper;
 using CarFinderApi.Library.ExternalDataAccess;
+using CarFinderUI.BlazorApp;
+using CarFinderUI.Library.Api;
+using CarFinderUI.Library.Models;
 using CarFinderWebApi.Models;
+using GridMvc.Server;
+using GridShared;
+using GridShared.Utility;
+using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Primitives;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,29 +26,42 @@ namespace CarFinderWebApi.Controllers
         private readonly IExternalCarsData _externalCarsData;
         private readonly ILogger<CarsController> _logger;
         private readonly IMapper _mapper;
+        private readonly ICarsEndpoint _carsEndpoint;
 
-        public CarsController(IExternalCarsData externalCarsData, ILogger<CarsController> logger, IMapper mapper)
+        public CarsController(IExternalCarsData externalCarsData, ILogger<CarsController> logger, IMapper mapper, ICarsEndpoint carsEndpoint)
         {
             _externalCarsData = externalCarsData;
             _logger = logger;
             _mapper = mapper;
+            _carsEndpoint = carsEndpoint;
         }
 
-        [HttpGet]
+        [HttpGet("[action]")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> GetCars()
+        public async Task<IActionResult> GetCarsGridRows()
         {
             try
             {
-                var cars = await _externalCarsData.GetCars();
-                var retVal = _mapper.Map<List<CarDTO>>(cars);
+                var items = await _carsEndpoint.GetAllAsync();
+                var server = new GridServer<CarModel>(items,
+                                                      Request.Query,
+                                                      true,
+                                                      "carsGrid",
+                                                      ColumnCollections.CarColumns,
+                                                      10)
+                                                     .ChangePageSize(enable: true)
+                                                     .Filterable()
+                                                     .Searchable()
+                                                     .Selectable(set: true)
+                                                     .Sortable()
+                                                     .WithMultipleFilters();
 
-                return Ok(retVal);
+                return Ok(server.ItemsToDisplay);
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, $"Exception at {nameof(GetCars)}");
+                _logger.LogError(ex, $"Exception at {nameof(GetCarsGridRows)}");
                 return BadRequest(ex.Message);
             }
         }
@@ -59,7 +80,7 @@ namespace CarFinderWebApi.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, $"Exception at {nameof(GetCars)}");
+                _logger.LogError(ex, $"Exception at {nameof(GetCar)}");
                 return BadRequest(ex.Message);
             }
         }
