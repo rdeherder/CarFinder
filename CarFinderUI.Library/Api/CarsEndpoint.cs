@@ -1,12 +1,7 @@
-﻿using CarFinderUI.Library.Api;
-using CarFinderUI.Library.Models;
-using Microsoft.Extensions.Configuration;
+﻿using CarFinderUI.Library.Models;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
 using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace CarFinderUI.Library.Api
