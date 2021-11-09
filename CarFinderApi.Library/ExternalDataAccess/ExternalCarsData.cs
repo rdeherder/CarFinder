@@ -52,16 +52,14 @@ namespace CarFinderApi.Library.ExternalDataAccess
 
         private async Task RetrieveAllFromExternalApi()
         {
-            using (HttpResponseMessage response = await _apiHelper.ApiClient.GetAsync("/cars"))
+            using HttpResponseMessage response = await _apiHelper.ApiClient.GetAsync("/cars");
+            if (response.IsSuccessStatusCode)
             {
-                if (response.IsSuccessStatusCode)
-                {
-                    _externalCars = await response.Content.ReadAsAsync<List<ExternalCarModel>>();
-                }
-                else
-                {
-                    throw new Exception(response.ReasonPhrase);
-                }
+                _externalCars = await response.Content.ReadAsAsync<List<ExternalCarModel>>();
+            }
+            else
+            {
+                throw new Exception(response.ReasonPhrase);
             }
         }
 
@@ -78,17 +76,15 @@ namespace CarFinderApi.Library.ExternalDataAccess
 
         private async Task<ExternalCarModel> RetrieveFromExternalApi(int id)
         {
-            using (HttpResponseMessage response = await _apiHelper.ApiClient.GetAsync($"/cars/{id}"))
+            using HttpResponseMessage response = await _apiHelper.ApiClient.GetAsync($"/cars/{id}");
+            if (response.IsSuccessStatusCode)
             {
-                if (response.IsSuccessStatusCode)
-                {
-                    var result = await response.Content.ReadAsAsync<ExternalCarModel>();
-                    return result;
-                }
-                else
-                {
-                    throw new Exception(response.ReasonPhrase);
-                }
+                var result = await response.Content.ReadAsAsync<ExternalCarModel>();
+                return result;
+            }
+            else
+            {
+                throw new Exception(response.ReasonPhrase);
             }
         }
 

@@ -5,8 +5,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="GridBlazor" Version="2.1.16" />
-    <PackageReference Include="GridMvcCore" Version="4.1.8" />
+    <PackageReference Include="GridBlazor" Version="2.1.20" />
+    <PackageReference Include="GridMvcCore" Version="4.1.10" />
   </ItemGroup>
 
   <ItemGroup>
