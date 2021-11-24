@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace CarFinderApi.Library.ExternalDataAccess
@@ -33,7 +32,7 @@ namespace CarFinderApi.Library.ExternalDataAccess
             _timeOutInMinutes = _config.GetValue<int>("ExternalCarsApiRefreshTimeOutInMinutes");
         }
 
-        public async Task<IEnumerable<ExternalCarModel>> GetCars()
+        public async Task<IEnumerable<ExternalCarModel>> GetCarsAsync()
         {
             if (_stopwatch.IsRunning)
             {
@@ -42,7 +41,7 @@ namespace CarFinderApi.Library.ExternalDataAccess
 
             if (_externalCars == null || _stopwatch.Elapsed.TotalMinutes >= _timeOutInMinutes)
             {
-                await RetrieveAllFromExternalApi();
+                await RetrieveAllFromExternalApiAsync();
 
                 _stopwatch = new Stopwatch();
                 _stopwatch.Start();
@@ -51,7 +50,7 @@ namespace CarFinderApi.Library.ExternalDataAccess
             return _externalCars;
         }
 
-        private async Task RetrieveAllFromExternalApi()
+        private async Task RetrieveAllFromExternalApiAsync()
         {
             using (HttpResponseMessage response = await _apiHelper.ApiClient.GetAsync("/cars"))
             {
@@ -66,18 +65,18 @@ namespace CarFinderApi.Library.ExternalDataAccess
             }
         }
 
-        public async Task<ExternalCarModel> GetCar(int id)
+        public async Task<ExternalCarModel> GetCarAsync(int id)
         {
             if (_externalCars == null)
             {
-                var result = await RetrieveFromExternalApi(id);
+                var result = await RetrieveFromExternalApiAsync(id);
                 return result;
             }
 
             return _externalCars.Where(c => c.Id == id).SingleOrDefault();
         }
 
-        private async Task<ExternalCarModel> RetrieveFromExternalApi(int id)
+        private async Task<ExternalCarModel> RetrieveFromExternalApiAsync(int id)
         {
             using (HttpResponseMessage response = await _apiHelper.ApiClient.GetAsync($"/cars/{id}"))
             {

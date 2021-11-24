@@ -12,7 +12,7 @@
     </div>
 }
 
-<EditForm Model="@_model" OnValidSubmit="@OnValidSubmit">
+<EditForm Model="@_model" OnValidSubmit="@OnValidSubmitAsync">
     <DataAnnotationsValidator />
 
     <div class="form-group row">
@@ -70,16 +70,16 @@
     CreateUserModel _model = new();
     string errorMessage;
 
-    private async Task OnValidSubmit()
+    private async Task OnValidSubmitAsync()
     {
         errorMessage = string.Empty;
 
         try
         {
-            await userEndpoint.CreateUser(_model);
+            await userEndpoint.CreateUserAsync(_model);
 
             // Wanneer de gebruiker is gemaakt, deze meteen inloggen:
-            AuthenticatedUserModel result = await authService.Login(new()
+            AuthenticatedUserModel result = await authService.LoginAsync(new()
             {
                 Email = _model.EmailAddress,
                 Password = _model.Password

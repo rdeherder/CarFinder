@@ -5,16 +5,10 @@ using CarFinderUI.Library.Api;
 using CarFinderUI.Library.Models;
 using CarFinderWebApi.Models;
 using GridMvc.Server;
-using GridShared;
-using GridShared.Utility;
-using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Primitives;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace CarFinderWebApi.Controllers
@@ -73,7 +67,7 @@ namespace CarFinderWebApi.Controllers
         {
             try
             {
-                var cars = await _externalCarsData.GetCar(id);
+                var cars = await _externalCarsData.GetCarAsync(id);
                 var retVal = _mapper.Map<CarDTO>(cars);
 
                 return Ok(retVal);

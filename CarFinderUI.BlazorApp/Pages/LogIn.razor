@@ -8,7 +8,7 @@
     </div>
 }
 
-<EditForm Model="_model" OnValidSubmit="ExecuteLogin" class="">
+<EditForm Model="_model" OnValidSubmit="ExecuteLoginAsync" class="">
 
     <div class="form-row">
         <div class="col-auto">
@@ -43,11 +43,11 @@
         navManager.NavigateTo("/register");
     }
 
-    private async Task ExecuteLogin()
+    private async Task ExecuteLoginAsync()
     {
         _showAuthenticationError = false;
 
-        AuthenticatedUserModel result = await authService.Login(_model);
+        AuthenticatedUserModel result = await authService.LoginAsync(_model);
 
         if (result is not null)
         {

@@ -6,7 +6,7 @@ namespace CarFinderApi.Library.ExternalDataAccess
 {
     public interface IExternalCarsData
     {
-        Task<ExternalCarModel> GetCar(int id);
-        Task<IEnumerable<ExternalCarModel>> GetCars();
+        Task<ExternalCarModel> GetCarAsync(int id);
+        Task<IEnumerable<ExternalCarModel>> GetCarsAsync();
     }
 }

@@ -5,7 +5,7 @@ namespace CarFinderUI.BlazorApp.Authentication
 {
     public interface IAuthenticationService
     {
-        Task<AuthenticatedUserModel> Login(AuthenticationUserModel userForAuthentication);
-        Task Logout();
+        Task<AuthenticatedUserModel> LoginAsync(AuthenticationUserModel userForAuthentication);
+        Task LogoutAsync();
     }
 }

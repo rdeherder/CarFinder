@@ -1,5 +1,3 @@
-using System;
-
 namespace CarFinderWebApi.Models
 {
     public class ErrorViewModel

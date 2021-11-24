@@ -1,11 +1,9 @@
-﻿using System;
+﻿using CarFinderUI.Library.Models;
+using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
-using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
-using CarFinderUI.Library.Models;
 
 namespace CarFinderUI.Library.Api
 {
@@ -18,7 +16,7 @@ namespace CarFinderUI.Library.Api
             _apiHelper = apiHelper;
         }
 
-        public async Task CreateUser(CreateUserModel user)
+        public async Task CreateUserAsync(CreateUserModel user)
         {
             var data = new
             {
@@ -49,7 +47,7 @@ namespace CarFinderUI.Library.Api
             }
         }
 
-        public async Task<List<UserModel>> GetAll()
+        public async Task<List<UserModel>> GetAllAsync()
         {
             using (HttpResponseMessage response = await _apiHelper.ApiClient.GetAsync("/api/User/Admin/GetAllUsers"))
             {
@@ -65,7 +63,7 @@ namespace CarFinderUI.Library.Api
             }
         }
 
-        public async Task<Dictionary<string, string>> GetAllRoles()
+        public async Task<Dictionary<string, string>> GetAllRolesAsync()
         {
             using (HttpResponseMessage response = await _apiHelper.ApiClient.GetAsync("/api/User/Admin/GetAllRoles"))
             {
@@ -81,7 +79,7 @@ namespace CarFinderUI.Library.Api
             }
         }
 
-        public async Task AddUserToRole(string userId, string roleName)
+        public async Task AddUserToRoleAsync(string userId, string roleName)
         {
             using (HttpResponseMessage response = await _apiHelper.ApiClient.PostAsJsonAsync("/api/User/Admin/AddRole", new { userId, roleName }))
             {
@@ -92,7 +90,7 @@ namespace CarFinderUI.Library.Api
             }
         }
 
-        public async Task RemoveUserFromRole(string userId, string roleName)
+        public async Task RemoveUserFromRoleAsync(string userId, string roleName)
         {
             using (HttpResponseMessage response = await _apiHelper.ApiClient.PostAsJsonAsync("/api/User/Admin/RemoveRole", new { userId, roleName }))
             {

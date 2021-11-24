@@ -1,10 +1,8 @@
 ﻿using Blazored.LocalStorage;
+using CarFinderUI.BlazorApp.Models;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.Extensions.Configuration;
-using CarFinderUI.BlazorApp.Models;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text.Json;
@@ -33,7 +31,7 @@ namespace CarFinderUI.BlazorApp.Authentication
             _authTokenStorageKey = _config["authTokenStorageKey"];
         }
 
-        public async Task<AuthenticatedUserModel> Login(AuthenticationUserModel userForAuthentication)
+        public async Task<AuthenticatedUserModel> LoginAsync(AuthenticationUserModel userForAuthentication)
         {
             var data = new FormUrlEncodedContent(new[]
             {
@@ -66,7 +64,7 @@ namespace CarFinderUI.BlazorApp.Authentication
             return result;
         }
 
-        public async Task Logout()
+        public async Task LogoutAsync()
         {
             await _localStorage.RemoveItemAsync(_authTokenStorageKey);
             ((AuthStateProvider)_authStateProvider).NotifyUserLogout();
