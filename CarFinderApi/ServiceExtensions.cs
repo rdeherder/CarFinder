@@ -1,7 +1,9 @@
-﻿using CarFinderApi.Library.ExternalDataAccess;
+﻿using CarFinderApi.Data;
+using CarFinderApi.Library.ExternalDataAccess;
 using Hangfire;
 using Hangfire.SqlServer;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -60,6 +62,21 @@ namespace CarFinderApi
             var result = $"* {currentMinute + intervalInMinutes}/{intervalInMinutes} * * * *";
 
             return result;
+        }
+
+        public static void ConfigureSqlServer(this IServiceCollection services, IConfiguration config)
+        {
+            services.AddDbContext<CarFinderDbContext>(options =>
+            {
+                options.UseSqlServer(config.GetConnectionString("DefaultConnection"));
+            });
+        }
+
+        public static void EnsureDatabaseIsCreated(this IApplicationBuilder app)
+        {
+            using var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope();
+            var context = serviceScope.ServiceProvider.GetRequiredService<CarFinderDbContext>();
+            context.Database.EnsureCreated();
         }
     }
 }
