@@ -1,6 +1,7 @@
 using CarFinderApi.Configurations;
 using CarFinderApi.Library.Api;
 using CarFinderApi.Library.ExternalDataAccess;
+using Hangfire;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -34,6 +35,8 @@ namespace CarFinderApi
             services.AddSingleton<IApiHelper, ApiHelper>();
             services.AddSingleton<IExternalCarsData, ExternalCarsData>();
 
+            services.ConfigureHangfire(Configuration);
+
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
@@ -41,7 +44,7 @@ namespace CarFinderApi
             });
         }
 
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IRecurringJobManager recurringJobs)
         {
             if (env.IsDevelopment())
             {
@@ -49,6 +52,8 @@ namespace CarFinderApi
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "CarFinderApi v1"));
             }
+
+            app.ConfigureHangfireJobs(Configuration, recurringJobs);
 
             app.UseHttpsRedirection();
 
@@ -61,6 +66,7 @@ namespace CarFinderApi
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                endpoints.MapHangfireDashboard();
             });
         }
     }

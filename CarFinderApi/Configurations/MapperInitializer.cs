@@ -7,7 +7,8 @@ namespace CarFinderApi.Configurations
     {
         public MapperInitializer()
         {
-            CreateMap<ExternalCarModel, CarDTO>().ReverseMap();
+            CreateMap<ExternalCarModel, CarDTO>()
+                .ForMember(c => c.HorsePower, c => c.MapFrom(c => c.HP));
         }
     }
 }
