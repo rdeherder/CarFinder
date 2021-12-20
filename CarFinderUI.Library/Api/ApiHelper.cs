@@ -7,20 +7,17 @@ namespace CarFinderUI.Library.Api
     public class ApiHelper : IApiHelper
     {
         private HttpClient _apiClient;
-        private readonly IConfiguration _config;
 
         public HttpClient ApiClient => _apiClient;
 
         public ApiHelper(IConfiguration config)
         {
-            _config = config;
-
-            InitializeClient();
+            InitializeClient(config);
         }
 
-        private void InitializeClient()
+        private void InitializeClient(IConfiguration config)
         {
-            string api = _config.GetValue<string>("Api");
+            string api = config.GetValue<string>("Api");
             _apiClient = new();
             _apiClient.BaseAddress = new Uri(api);
             _apiClient.DefaultRequestHeaders.Accept.Clear();

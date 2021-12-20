@@ -1,4 +1,4 @@
-﻿namespace CarFinderApi.Models
+﻿namespace CarFinderApi.Library.Models
 {
     public class ExternalCarModel
     {

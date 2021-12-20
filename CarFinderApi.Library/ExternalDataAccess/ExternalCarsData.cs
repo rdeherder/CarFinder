@@ -1,5 +1,5 @@
 ﻿using CarFinderApi.Library.Api;
-using CarFinderApi.Models;
+using CarFinderApi.Library.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
