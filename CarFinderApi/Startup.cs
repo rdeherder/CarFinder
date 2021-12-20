@@ -1,9 +1,11 @@
 using CarFinderApi.Configurations;
+using CarFinderApi.Data;
 using CarFinderApi.Library.Api;
 using CarFinderApi.Library.ExternalDataAccess;
 using Hangfire;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -24,13 +26,15 @@ namespace CarFinderApi
         {
             services.AddAutoMapper(typeof(MapperInitializer));
 
-            services.AddCors(o =>
+            services.AddCors(options =>
             {
-                o.AddPolicy("MyCorsPolicy_AllowAll",
-                            builder => builder.AllowAnyOrigin()
-                                              .AllowAnyMethod()
-                                              .AllowAnyHeader());
+                options.AddPolicy("MyCorsPolicy_AllowAll",
+                                  builder => builder.AllowAnyOrigin()
+                                                    .AllowAnyMethod()
+                                                    .AllowAnyHeader());
             });
+
+            services.ConfigureSqlServer(Configuration);
 
             services.AddSingleton<IApiHelper, ApiHelper>();
             services.AddSingleton<IExternalCarsData, ExternalCarsData>();
@@ -53,7 +57,7 @@ namespace CarFinderApi
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "CarFinderApi v1"));
             }
 
-            app.ConfigureHangfireJobs(Configuration, recurringJobs);
+            app.EnsureDatabaseIsCreated();
 
             app.UseHttpsRedirection();
 
@@ -62,6 +66,8 @@ namespace CarFinderApi
             app.UseRouting();
 
             app.UseAuthorization();
+
+            app.ConfigureHangfireJobs(Configuration, recurringJobs);
 
             app.UseEndpoints(endpoints =>
             {
