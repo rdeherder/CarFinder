@@ -1,3 +1,4 @@
+using Blazored.Modal;
 using CarFinderUI.Blazor.Data;
 using CarFinderUI.Library.Api;
 using Microsoft.AspNetCore.Builder;
@@ -21,6 +22,8 @@ namespace CarFinderUI.Blazor
         {
             services.AddRazorPages();
             services.AddServerSideBlazor();
+            
+            services.AddBlazoredModal();
 
             services.AddSingleton<IApiHelper, ApiHelper>();
             services.AddSingleton<ICarsEndpoint, CarsEndpoint>();
