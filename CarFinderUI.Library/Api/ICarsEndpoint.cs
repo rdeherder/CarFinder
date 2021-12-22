@@ -1,5 +1,6 @@
 ﻿using CarFinderUI.Library.Models;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace CarFinderUI.Library.Api
@@ -7,6 +8,6 @@ namespace CarFinderUI.Library.Api
     public interface ICarsEndpoint
     {
         Task<CarModel> GetAsync(int id);
-        Task<IEnumerable<CarModel>> GetAllAsync();
+        Task<IEnumerable<CarModel>> GetAllAsync(CancellationToken token);
     }
 }
