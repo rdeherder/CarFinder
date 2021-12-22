@@ -1,5 +1,4 @@
 ﻿@page "/cars"
-@using Microsoft.Extensions.Primitives
 @inject ICarService carService
 @inject NavigationManager navMan
 @inject IJSRuntime jsRuntime
@@ -10,7 +9,12 @@
 }
 else
 {
-    <p><em>Cars are being loaded, one moment please...</em></p>
+    <p>
+        <em>Cars are being loaded, one moment please...</em>
+        <br />
+        <br />
+        <button @onclick="CancelGetCars">Cancel</button>
+    </p>
 }
 
 @code
@@ -18,6 +22,7 @@ else
     private CGrid<CarModel> _grid;
     private Task _task;
     private List<Action<object>> _rowClickActions;
+    private CancellationTokenSource _cancellationTokenSource;
 
     protected override async Task OnParametersSetAsync()
     {
@@ -37,18 +42,30 @@ else
         var query = new QueryDictionary<StringValues>();
         query.Add("grid-page", "2");
 
-        var client = new GridClient<CarModel>(q => carService.GetCarsGridRowsAsync(columns, q), query, false, "carsGrid", columns)
-                                             .ChangePageSize(enable: true)
-                                             .Filterable()
-                                             .Searchable()
-                                             .Selectable(enable: true)
-                                             .Sortable()
-                                             .WithMultipleFilters();
+        _cancellationTokenSource = new();
+        var client = new GridClient<CarModel>(q => carService.GetCarsGridRowsAsync(columns, 
+                                                                                   q, 
+                                                                                   _cancellationTokenSource.Token),
+                                              query,
+                                              false,
+                                              "carsGrid",
+                                              columns)
+                                              .ChangePageSize(enable: true)
+                                              .Filterable()
+                                              .Searchable()
+                                              .Selectable(enable: true)
+                                              .Sortable()
+                                              .WithMultipleFilters();
 
         _grid = client.Grid;
 
         _task = client.UpdateGrid();
         await _task;
+    }
+
+    public void CancelGetCars()
+    {
+        _cancellationTokenSource.Cancel();
     }
 
     private void ShowDetail(object item)

@@ -6,6 +6,7 @@ using GridShared.Utility;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Primitives;
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace CarFinderUI.Blazor.Data
@@ -14,28 +15,31 @@ namespace CarFinderUI.Blazor.Data
     {
         private readonly ICarsEndpoint _carsEndpoint;
 
+        public CancellationTokenSource GetCarsTokenSource { get; set; } = new CancellationTokenSource();
+
         public CarService(ICarsEndpoint carsEndpoint)
         {
             _carsEndpoint = carsEndpoint;
         }
 
         public async Task<ItemsDTO<CarModel>> GetCarsGridRowsAsync(Action<IGridColumnCollection<CarModel>> columns,
-                QueryDictionary<StringValues> query)
+                                                                   QueryDictionary<StringValues> query,
+                                                                   CancellationToken token)
         {
-            var items = await _carsEndpoint.GetAllAsync();
+            var items = await _carsEndpoint.GetAllAsync(token);
 
             var server = new GridServer<CarModel>(items,
-                            new QueryCollection(query),
-                            true,
-                            "carsGrid",
-                            columns,
-                            10)
-                            .ChangePageSize(enable: true)
-                            .Filterable()
-                            .Searchable()
-                            .Selectable(set: true)
-                            .Sortable()
-                            .WithMultipleFilters();
+                                                  new QueryCollection(query),
+                                                  true,
+                                                  "carsGrid",
+                                                  columns,
+                                                  10)
+                                                  .ChangePageSize(enable: true)
+                                                  .Filterable()
+                                                  .Searchable()
+                                                  .Selectable(set: true)
+                                                  .Sortable()
+                                                  .WithMultipleFilters();
 
             return server.ItemsToDisplay;
         }

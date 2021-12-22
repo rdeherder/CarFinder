@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace CarFinderUI.Library.Api
@@ -15,23 +16,31 @@ namespace CarFinderUI.Library.Api
             _apiHelper = apiHelper;
         }
 
-        public async Task<IEnumerable<CarModel>> GetAllAsync()
+        public async Task<IEnumerable<CarModel>> GetAllAsync(CancellationToken token)
         {
-            using HttpResponseMessage response = await _apiHelper.ApiClient.GetAsync("/api/cars");
-            if (response.IsSuccessStatusCode)
+            try
             {
-                var result = await response.Content.ReadAsAsync<IEnumerable<CarModel>>();
-                return result;
+                using HttpResponseMessage response = await _apiHelper.ApiClient.GetAsync("/cars", token);
+                if (response.IsSuccessStatusCode)
+                {
+                    var result = await response.Content.ReadAsAsync<IEnumerable<CarModel>>();
+                    return result;
+                }
+                else
+                {
+                    throw new Exception(response.ReasonPhrase);
+                }
             }
-            else
+            catch (OperationCanceledException)
             {
-                throw new Exception(response.ReasonPhrase);
+                Console.WriteLine("GetAllCars cancelled by user.");
             }
+            return null;
         }
 
         public async Task<CarModel> GetAsync(int id)
         {
-            using HttpResponseMessage response = await _apiHelper.ApiClient.GetAsync($"/api/cars/{id}");
+            using HttpResponseMessage response = await _apiHelper.ApiClient.GetAsync($"/cars/{id}");
             if (response.IsSuccessStatusCode)
             {
                 var result = await response.Content.ReadAsAsync<CarModel>();

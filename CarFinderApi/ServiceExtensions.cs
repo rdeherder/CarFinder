@@ -35,9 +35,11 @@ namespace CarFinderApi
             app.UseHangfireDashboard();
 
             int refreshTimeOutInMinutes = config.GetValue<int>("ExternalCarsApiRefreshTimeOutInMinutes");
-            string interval = IntervalInMinutesAsCronExpression(refreshTimeOutInMinutes);
+            string interval = IntervalInMinutesToCronExpression(refreshTimeOutInMinutes);
 
-            recurringJobs.AddOrUpdate<ExternalCarsData>("GetExternalCarsData", job => job.RetrieveAllFromExternalApi(), interval);
+            recurringJobs.AddOrUpdate<ExternalCarsData>("GetExternalCarsData", 
+                                                        job => job.LoadBufferFromExternalApiAsync(), 
+                                                        interval);
         }
 
         /// <summary>
@@ -48,18 +50,23 @@ namespace CarFinderApi
         /// I.e. When the intervalparameter is 15, it returns a cron expression 
         /// to execute a task every 15 minutes from fifteen minutes from now.
         /// </remarks>
-        private static string IntervalInMinutesAsCronExpression(int intervalInMinutes)
+        private static string IntervalInMinutesToCronExpression(int intervalInMinutes)
         {
-            if (intervalInMinutes <= 0)
+            if (intervalInMinutes <= 0 || intervalInMinutes >= 60)
             {
                 throw new Exception("Please enter a valid interval.");
             }
 
             int currentMinute = DateTime.Now.Minute;
+            int startMinute = currentMinute + intervalInMinutes;
+            while (startMinute >= 60)
+            {
+                startMinute -= 60;
+            }
 
             // Cron format:
             // Seconds 	Minutes     Hours 	Day Of Month 	Month 	Day Of Week
-            var result = $"* {currentMinute + intervalInMinutes}/{intervalInMinutes} * * * *";
+            var result = $"* {startMinute}/{intervalInMinutes} * * * *";
 
             return result;
         }

@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace CarFinderApi.Controllers
@@ -27,12 +28,12 @@ namespace CarFinderApi.Controllers
 
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> GetCars()
         {
             try
             {
-                var cars = await _externalCarsData.GetCars();
+                var cars = await _externalCarsData.GetCarsAsync();
                 var retVal = _mapper.Map<List<CarDTO>>(cars);
 
                 return Ok(retVal);
@@ -46,19 +47,19 @@ namespace CarFinderApi.Controllers
 
         [HttpGet("{id:int}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> GetCar(int id)
         {
             try
             {
-                var cars = await _externalCarsData.GetCar(id);
-                var retVal = _mapper.Map<CarDTO>(cars);
+                var car = await _externalCarsData.GetCarAsync(id);
+                var retVal = _mapper.Map<CarDTO>(car);
 
                 return Ok(retVal);
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, $"Exception at {nameof(GetCars)}");
+                _logger.LogError(ex, $"Exception at {nameof(GetCar)}");
                 return BadRequest(ex.Message);
             }
         }
