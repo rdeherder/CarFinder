@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using CarFinderApi.Extensions;
 using CarFinderApi.Library.Models;
 using CarFinderApi.Models;
 
@@ -8,7 +9,9 @@ namespace CarFinderApi.Configurations
     {
         public MapperInitializer()
         {
-            CreateMap<ExternalCarModel, CarDTO>();
+            CreateMap<ExternalCarModel, CarDTO>()
+                .ForMember(c => c.Make, c => c.MapFrom(c => c.Make.Capitalize()))
+                .ForMember(c => c.Model, c => c.MapFrom(c => c.Model.Capitalize()));
         }
     }
 }
