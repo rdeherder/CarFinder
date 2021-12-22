@@ -3,8 +3,6 @@
 
 @if (_car != null)
 {
-    <h3>Car details</h3>
-
     <div class="polaroid">
         <img src="@_car.Img_Url" />
         <div class="table">
@@ -27,7 +25,7 @@
                         <td>@_car.Year</td>
                     </tr>
                     <tr>
-                        <td>HP</td>
+                        <td>Horse power</td>
                         <td>@_car.HorsePower</td>
                     </tr>
                     <tr>
@@ -38,15 +36,20 @@
             </table>
         </div>
     </div>
-
+    <button @onclick="Close">Close</button>
 }
 else
 {
-    <p><em>Loading cars, one moment please...</em></p>
+    <p>
+        <em>Loading car, one moment please...</em>
+    </p>
 }
 
 @code {
     private CarModel _car;
+
+    [CascadingParameter]
+    BlazoredModalInstance ModalInstance { get; set; }
 
     [Parameter]
     public int Id { get; set; }
@@ -55,4 +58,8 @@ else
     {
         _car = await carService.GetCarByIdAsync(Id);
     }
-}
+
+    public void Close()
+    {
+        ModalInstance.CancelAsync();
+    }}
