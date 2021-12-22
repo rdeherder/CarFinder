@@ -6,12 +6,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using System.Threading;
 using System.Threading.Tasks;
 
 namespace CarFinderApi.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     [ApiController]
     public class CarsController : ControllerBase
     {
@@ -28,7 +27,7 @@ namespace CarFinderApi.Controllers
 
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> GetCars()
         {
             try
@@ -41,13 +40,13 @@ namespace CarFinderApi.Controllers
             catch (Exception ex)
             {
                 _logger.LogError(ex, $"Exception at {nameof(GetCars)}");
-                return BadRequest(ex.Message);
+                return new StatusCodeResult(StatusCodes.Status500InternalServerError);
             }
         }
 
         [HttpGet("{id:int}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> GetCar(int id)
         {
             try
@@ -60,7 +59,7 @@ namespace CarFinderApi.Controllers
             catch (Exception ex)
             {
                 _logger.LogError(ex, $"Exception at {nameof(GetCar)}");
-                return BadRequest(ex.Message);
+                return new StatusCodeResult(StatusCodes.Status500InternalServerError);
             }
         }
     }

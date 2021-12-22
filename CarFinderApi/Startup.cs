@@ -1,11 +1,9 @@
 using CarFinderApi.Configurations;
-using CarFinderApi.Data;
 using CarFinderApi.Library.Api;
 using CarFinderApi.Library.ExternalDataAccess;
 using Hangfire;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
