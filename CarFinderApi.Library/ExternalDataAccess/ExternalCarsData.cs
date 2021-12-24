@@ -38,15 +38,22 @@ namespace CarFinderApi.Library.ExternalDataAccess
 
         private async Task RetrieveAllFromExternalApiAsync()
         {
-            using HttpResponseMessage response = await _apiHelper.ApiClient.GetAsync("/cars");
-            if (response.IsSuccessStatusCode)
+            try
             {
-                _externalCars = await response.Content.ReadAsAsync<List<ExternalCarModel>>();
+                using HttpResponseMessage response = await _apiHelper.ApiClient.GetAsync("/cars");
+                if (response.IsSuccessStatusCode)
+                {
+                    _externalCars = await response.Content.ReadAsAsync<List<ExternalCarModel>>();
+                }
+                else
+                {
+                    _logger.LogError($"Error retrieving cars from remote api: {response.ReasonPhrase}");
+                    throw new Exception(response.ReasonPhrase);
+                }
             }
-            else
+            catch (Exception ex)
             {
-                _logger.LogError($"Error retrieving cars from remote api: {response.ReasonPhrase}");
-                throw new Exception(response.ReasonPhrase);
+                _logger.LogError(ex.Message);
             }
         }
 
