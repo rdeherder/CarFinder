@@ -29,10 +29,14 @@ namespace CarFinderUI.Library.Api
                                     .WaitAndRetryAsync(maxRetryAttempts, 
                                                        p => pauseBetweenFailures);
 
+            int attempt = 0;
             await retryPolicy.ExecuteAsync(async () =>
             {
                 try
                 {
+                    attempt++;
+                    _logger.LogInformation($"Requesting cars from api, attempt {attempt}.");
+
                     using HttpResponseMessage response = await _apiHelper.ApiClient.GetAsync("/cars", token);
                     if (response.IsSuccessStatusCode)
                     {
