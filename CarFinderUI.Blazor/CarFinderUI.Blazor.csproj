@@ -6,8 +6,8 @@
 
   <ItemGroup>
     <PackageReference Include="Blazored.Modal" Version="6.0.1" />
-    <PackageReference Include="GridBlazor" Version="2.1.20" />
-    <PackageReference Include="GridMvcCore" Version="4.1.10" />
+    <PackageReference Include="GridBlazor" Version="3.0.5" />
+    <PackageReference Include="GridMvcCore" Version="5.0.3" />
     <PackageReference Include="Serilog.AspNetCore" Version="4.1.0" />
   </ItemGroup>
 
