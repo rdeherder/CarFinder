@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.31313.79
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.32014.148
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarFinderApi", "CarFinderApi\CarFinderApi.csproj", "{F1C99419-B4A2-4FC3-BF5A-FDCAA8E330F2}"
 EndProject
@@ -10,6 +10,8 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarFinderUI.Library", "CarFinderUI.Library\CarFinderUI.Library.csproj", "{17C15710-95BE-40B7-AF71-CDC38E290318}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarFinderUI.Blazor", "CarFinderUI.Blazor\CarFinderUI.Blazor.csproj", "{0D62AF5A-1948-4207-A858-53C33E3C613B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarFinderApi.Test", "CarFinderApi.Test\CarFinderApi.Test.csproj", "{A90ABA8C-A45F-40BF-9CB6-F2106B474AE1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{0D62AF5A-1948-4207-A858-53C33E3C613B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0D62AF5A-1948-4207-A858-53C33E3C613B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0D62AF5A-1948-4207-A858-53C33E3C613B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A90ABA8C-A45F-40BF-9CB6-F2106B474AE1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A90ABA8C-A45F-40BF-9CB6-F2106B474AE1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A90ABA8C-A45F-40BF-9CB6-F2106B474AE1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A90ABA8C-A45F-40BF-9CB6-F2106B474AE1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

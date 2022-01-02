@@ -9,6 +9,7 @@
                 return value;
             }
 
+            value = value.ToLower();
             string result = value[0].ToString().ToUpper();
             if (value.Length > 1)
             {
