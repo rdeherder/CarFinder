@@ -46,14 +46,19 @@ namespace CarFinderApi.Controllers
 
         [HttpGet("{id:int}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> GetCar(int id)
         {
             try
             {
                 var car = await _externalCarsData.GetCarAsync(id);
-                var retVal = _mapper.Map<CarDTO>(car);
+                if (car is null)
+                {
+                    return NotFound();
+                }
 
+                var retVal = _mapper.Map<CarDTO>(car);
                 return Ok(retVal);
             }
             catch (Exception ex)
